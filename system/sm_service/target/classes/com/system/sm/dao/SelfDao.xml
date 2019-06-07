@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--根节点-->
+<mapper namespace="com.system.sm.dao.SelfDao">
+
+
+    <!--Department接口中有几个方法名就配置几个标签-->
+    <!--映射文件-->
+    <!--结果集类型就是staffdao类型，太复杂，直接调用staffdao中的resultmap-->
+    <select id="selectByAccount" parameterType="String" resultMap="com.system.sm.dao.StaffDao.resultMap">
+        select *from staff where account=#{account}
+    </select>
+
+</mapper>

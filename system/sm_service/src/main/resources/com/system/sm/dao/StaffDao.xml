@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--根节点-->
+<mapper namespace="com.system.sm.dao.StaffDao">
+    <resultMap id="resultMap" type="com.system.sm.entity.Staff">
+        <!--实体类中的每一个属性跟表里面每一个字段的一一对应关系-->
+        <id property="id" column="id" javaType="Integer"/>
+        <result property="account" column="account" javaType="String"/>
+        <result property="password" column="password" javaType="String"/>
+        <result property="status" column="status" javaType="String"/>
+        <result property="did" column="did" javaType="Integer"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="sex" column="sex" javaType="String"/>
+
+        <!--配置属性名，不配置mysbastis不知道对应的-->
+        <result property="idNumber" column="id_number" javaType="String"/>
+        <result property="workTime" column="work_time" javaType="java.util.Date"/>
+        <result property="leaveTime" column="leave_time" javaType="java.util.Date"/>
+        <result property="bornDate" column="born_date" javaType="java.util.Date"/>
+        <result property="info" column="info" javaType="String"/>
+        <!-- 当拿到员工对象id后，也能拿到员工的部门对象-->
+        <!-- 查看员工的部门信息时候，可以查看到部门的其他属性信息，涉及对象关联问题-->
+        <!-- 用did这个字段跟department关联  -->
+        <!-- 获取一个员工对象的时候，怎么获取复杂department的对象 ，定义select属性，查询功能，从Department。xml中调用这个功能 -->
+        <association property="department" column="did" javaType="Department" select="com.system.sm.dao.DepartmentDao.selectById" />
+    </resultMap>
+
+    <!--Department接口中有几个方法名就配置几个标签-->
+    <!--映射文件-->
+    <insert id="insert" parameterType="Staff" useGeneratedKeys="true">
+       insert into staff(account,password,status,did,name,sex,id_number,work_time,leave_time,born_date,info)
+        values(#{account},#{password},#{status},#{did},#{name},#{sex},
+        #{idNumber},#{workTime},#{leaveTime},#{bornDate},#{info})
+    </insert>
+    <insert id="delete" parameterType="Integer">
+        delete from staff where id=#{id}
+    </insert>
+    <update id="update" parameterType="Staff">
+       update staff set account=#{account},password=#{password},status=#{status},
+        did=#{did},name=#{name},sex=#{sex},id_number=#{idNumber},
+        work_time=#{workTime},leave_time=#{leaveTime},born_date=#{bornDate},info=#{info} where id=#{id}
+    </update>
+    <select id="selectById" parameterType="Integer" resultMap="resultMap">
+        select *from staff where id=#{id}
+    </select>
+    <select id="selectAll" resultMap="resultMap">
+        select *from staff
+    </select>
+
+</mapper>
