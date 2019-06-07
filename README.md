@@ -1,5 +1,6 @@
 # management_system
 初次接触spring+mybatis，参考员工管理系统代码，对于初学者来说，受益匪浅。
+
 一、三层架构
 
 1、持久层 Mybatis
